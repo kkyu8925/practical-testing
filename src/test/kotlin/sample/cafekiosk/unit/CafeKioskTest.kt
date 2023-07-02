@@ -5,6 +5,8 @@ import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 import sample.cafekiosk.unit.beverage.Americano
 import sample.cafekiosk.unit.beverage.Latte
+import java.time.LocalDateTime
+
 
 class CafeKioskTest {
 
@@ -44,8 +46,7 @@ class CafeKioskTest {
 
         assertThatThrownBy {
             cafeKiosk.add(americano, 0)
-        }.isInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage("음료는 1잔 이상 주문하실 수 있습니다.")
+        }.isInstanceOf(IllegalArgumentException::class.java).hasMessage("음료는 1잔 이상 주문하실 수 있습니다.")
     }
 
     @Test
@@ -72,5 +73,41 @@ class CafeKioskTest {
 
         cafeKiosk.clear()
         assertThat(cafeKiosk.beverages).isEmpty()
+    }
+
+    @Test
+    fun createOrder() {
+        val cafeKiosk = CafeKiosk()
+        val americano = Americano()
+        cafeKiosk.add(americano)
+
+        val order = cafeKiosk.createOrder()
+
+        assertThat(order.beverages).hasSize(1)
+        assertThat(order.beverages.first().getName()).isEqualTo("아메리카노")
+    }
+
+    @Test
+    fun createOrderWithCurrentTime() {
+        val cafeKiosk = CafeKiosk()
+        val americano = Americano()
+        cafeKiosk.add(americano)
+
+        val order = cafeKiosk.createOrder(LocalDateTime.of(2023, 1, 17, 10, 0))
+
+        assertThat(order.beverages).hasSize(1)
+        assertThat(order.beverages.first().getName()).isEqualTo("아메리카노")
+    }
+
+    @Test
+    fun createOrderOutsideOpenTime() {
+        val cafeKiosk = CafeKiosk()
+        val americano = Americano()
+        cafeKiosk.add(americano)
+
+        assertThatThrownBy {
+            cafeKiosk.createOrder(LocalDateTime.of(2023, 1, 17, 9, 59))
+        }.isInstanceOf(java.lang.IllegalArgumentException::class.java)
+            .hasMessage("주문 시간이 아닙니다. 관리자에게 문의하세요.")
     }
 }
