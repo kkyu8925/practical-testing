@@ -1,6 +1,7 @@
 package sample.cafekiosk.unit
 
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 import sample.cafekiosk.unit.beverage.Americano
 import sample.cafekiosk.unit.beverage.Latte
@@ -23,6 +24,28 @@ class CafeKioskTest {
 
         assertThat(cafeKiosk.beverages).hasSize(1)
         assertThat(cafeKiosk.beverages.first().getName()).isEqualTo("아메리카노")
+    }
+
+    @Test
+    fun addSeveralBeverages() {
+        val cafeKiosk = CafeKiosk()
+        val americano = Americano()
+
+        cafeKiosk.add(americano, 2)
+
+        assertThat(cafeKiosk.beverages[0]).isEqualTo(americano)
+        assertThat(cafeKiosk.beverages[1]).isEqualTo(americano)
+    }
+
+    @Test
+    fun addZeroBeverages() {
+        val cafeKiosk = CafeKiosk()
+        val americano = Americano()
+
+        assertThatThrownBy {
+            cafeKiosk.add(americano, 0)
+        }.isInstanceOf(IllegalArgumentException::class.java)
+            .hasMessage("음료는 1잔 이상 주문하실 수 있습니다.")
     }
 
     @Test

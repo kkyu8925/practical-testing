@@ -11,6 +11,16 @@ data class CafeKiosk(
         beverages.add(beverage)
     }
 
+    fun add(beverage: Beverage, count: Int) {
+        require(count > 0) {
+            "음료는 1잔 이상 주문하실 수 있습니다."
+        }
+
+        for (i in 0..count) {
+            beverages.add(beverage)
+        }
+    }
+
     fun remove(beverage: Beverage) {
         beverages.remove(beverage)
     }
