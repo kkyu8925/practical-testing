@@ -7,7 +7,6 @@ import sample.cafekiosk.unit.beverage.Americano
 import sample.cafekiosk.unit.beverage.Latte
 import java.time.LocalDateTime
 
-
 class CafeKioskTest {
 
     @Test
@@ -76,6 +75,20 @@ class CafeKioskTest {
     }
 
     @Test
+    fun calculateTotalPrice() {
+        val cafeKiosk = CafeKiosk()
+        val americano = Americano()
+        val latte = Latte()
+
+        cafeKiosk.add(americano)
+        cafeKiosk.add(latte)
+
+        val totalPrice = cafeKiosk.calculateTotalPrice()
+
+        assertThat(totalPrice).isEqualTo(8500)
+    }
+
+    @Test
     fun createOrder() {
         val cafeKiosk = CafeKiosk()
         val americano = Americano()
@@ -107,7 +120,6 @@ class CafeKioskTest {
 
         assertThatThrownBy {
             cafeKiosk.createOrder(LocalDateTime.of(2023, 1, 17, 9, 59))
-        }.isInstanceOf(java.lang.IllegalArgumentException::class.java)
-            .hasMessage("주문 시간이 아닙니다. 관리자에게 문의하세요.")
+        }.isInstanceOf(java.lang.IllegalArgumentException::class.java).hasMessage("주문 시간이 아닙니다. 관리자에게 문의하세요.")
     }
 }

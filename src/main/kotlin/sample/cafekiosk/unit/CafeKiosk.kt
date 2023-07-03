@@ -35,11 +35,7 @@ data class CafeKiosk(
     }
 
     fun calculateTotalPrice(): Int {
-        var totalPrice = 0
-        for (beverage in beverages) {
-            totalPrice += beverage.getPrice()
-        }
-        return totalPrice
+        return beverages.sumOf { it.getPrice() }
     }
 
     fun createOrder(): Order {
