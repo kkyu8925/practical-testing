@@ -76,8 +76,10 @@ class CafeKioskTest {
         assertThat(cafeKiosk.beverages).isEmpty()
     }
 
+    @DisplayName("주문 목록에 담긴 상품들의 총 금액을 계산할 수 있다.")
     @Test
     fun calculateTotalPrice() {
+        // given
         val cafeKiosk = CafeKiosk()
         val americano = Americano()
         val latte = Latte()
@@ -85,8 +87,10 @@ class CafeKioskTest {
         cafeKiosk.add(americano)
         cafeKiosk.add(latte)
 
+        // when
         val totalPrice = cafeKiosk.calculateTotalPrice()
 
+        // then
         assertThat(totalPrice).isEqualTo(8500)
     }
 
