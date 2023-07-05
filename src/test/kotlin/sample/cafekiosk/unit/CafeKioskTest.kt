@@ -2,6 +2,7 @@ package sample.cafekiosk.unit
 
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import sample.cafekiosk.unit.beverage.Americano
 import sample.cafekiosk.unit.beverage.Latte
@@ -18,6 +19,7 @@ class CafeKioskTest {
         println(">>> 담긴 음료 : " + cafeKiosk.beverages.first().getName())
     }
 
+    @DisplayName("음료 1개를 추가하면 주문 목록에 담긴다.")
     @Test
     fun add() {
         val cafeKiosk = CafeKiosk()
