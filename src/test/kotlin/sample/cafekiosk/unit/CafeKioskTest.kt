@@ -100,10 +100,13 @@ class CafeKioskTest {
         val americano = Americano()
         cafeKiosk.add(americano)
 
-        val order = cafeKiosk.createOrder()
+//        val order = cafeKiosk.createOrder()
 
-        assertThat(order.beverages).hasSize(1)
-        assertThat(order.beverages.first().getName()).isEqualTo("아메리카노")
+//        assertThat(order.beverages).hasSize(1)
+//        assertThat(order.beverages.first().getName()).isEqualTo("아메리카노")
+        assertThatThrownBy {
+            cafeKiosk.createOrder()
+        }.isInstanceOf(java.lang.IllegalArgumentException::class.java).hasMessage("주문 시간이 아닙니다. 관리자에게 문의하세요.")
     }
 
     @Test

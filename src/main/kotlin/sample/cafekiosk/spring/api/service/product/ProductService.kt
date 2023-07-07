@@ -12,14 +12,7 @@ class ProductService(
 
     fun getSellingProducts(): List<ProductResponse> {
         return productRepository.findAllBySellingStatusIn(ProductSellingStatus.forDisplay()).map {
-            ProductResponse(
-                id = it.id,
-                productNumber = it.productNumber,
-                type = it.type,
-                sellingStatus = it.sellingStatus,
-                name = it.name,
-                price = it.price
-            )
+            ProductResponse.of(it)
         }
     }
 }

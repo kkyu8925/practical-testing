@@ -10,7 +10,7 @@ import java.time.LocalDateTime
 @Entity
 class Order(
     products: List<Product>,
-    registeredDateTime: LocalDateTime
+    val registeredDateTime: LocalDateTime
 ) : BaseEntity() {
 
     @Id
@@ -35,8 +35,6 @@ class Order(
     val orderStatus: OrderStatus = OrderStatus.INIT
 
     val totalPrice: Int = products.sumOf { it.price }
-
-    val registeredDateTime: LocalDateTime = registeredDateTime
 
     @OneToMany(mappedBy = "order", cascade = [CascadeType.ALL])
     val orderProducts: MutableList<OrderProduct> = products.map {
