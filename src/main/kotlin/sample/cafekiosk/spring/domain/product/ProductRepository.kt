@@ -12,4 +12,6 @@ interface ProductRepository : JpaRepository<Product, Long> {
      * where selling_status in ('SELLING', 'HOLD');
      */
     fun findAllBySellingStatusIn(sellingStatuses: List<ProductSellingStatus>): List<Product>
+
+    fun findAllByProductNumberIn(productNumbers: List<String>): List<Product>
 }
