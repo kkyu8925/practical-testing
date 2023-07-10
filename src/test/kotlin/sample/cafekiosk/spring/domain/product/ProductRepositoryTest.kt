@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import org.springframework.test.context.ActiveProfiles
 import sample.cafekiosk.spring.domain.product.ProductSellingStatus.*
+import sample.cafekiosk.spring.domain.product.ProductType.*
 
 @ActiveProfiles("test")
 //@SpringBootTest
@@ -15,32 +16,14 @@ import sample.cafekiosk.spring.domain.product.ProductSellingStatus.*
 internal class ProductRepositoryTest @Autowired constructor(
     private val productRepository: ProductRepository
 ) {
-    private val product1 = Product(
-        productNumber = "001",
-        type = ProductType.HANDMADE,
-        sellingStatus = SELLING,
-        name = "아메리카노",
-        price = 4000
-    )
-    private val product2 = Product(
-        productNumber = "002",
-        type = ProductType.HANDMADE,
-        sellingStatus = HOLD,
-        name = "카페라떼",
-        price = 4500
-    )
-    private val product3 = Product(
-        productNumber = "003",
-        type = ProductType.HANDMADE,
-        sellingStatus = STOP_SELLING,
-        name = "팥빙수",
-        price = 7000
-    )
 
     @DisplayName("원하는 판매상태를 가진 상품들을 조회한다.")
     @Test
     fun findAllBySellingStatusIn() {
         // given
+        val product1 = createProduct("001", HANDMADE, SELLING, "아메리카노", 4000)
+        val product2 = createProduct("002", HANDMADE, HOLD, "카페라떼", 4500)
+        val product3 = createProduct("003", HANDMADE, STOP_SELLING, "팥빙수", 7000)
         productRepository.saveAll(listOf(product1, product2, product3))
 
         // when
@@ -59,6 +42,9 @@ internal class ProductRepositoryTest @Autowired constructor(
     @Test
     fun findAllByProductNumberIn() {
         // given
+        val product1 = createProduct("001", HANDMADE, SELLING, "아메리카노", 4000)
+        val product2 = createProduct("002", HANDMADE, HOLD, "카페라떼", 4500)
+        val product3 = createProduct("003", HANDMADE, STOP_SELLING, "팥빙수", 7000)
         productRepository.saveAll(listOf(product1, product2, product3))
 
         // when
@@ -71,5 +57,49 @@ internal class ProductRepositoryTest @Autowired constructor(
                 tuple("001", "아메리카노", SELLING),
                 tuple("002", "카페라떼", HOLD)
             )
+    }
+
+    @DisplayName("가장 마지막으로 저장한 상품의 상품번호를 읽어온다.")
+    @Test
+    fun findLatestProductNumber() {
+        // given
+        val targetProductNumber = "003"
+
+        val product1 = createProduct("001", HANDMADE, SELLING, "아메리카노", 4000)
+        val product2 = createProduct("002", HANDMADE, HOLD, "카페라떼", 4500)
+        val product3 = createProduct(targetProductNumber, HANDMADE, STOP_SELLING, "팥빙수", 7000)
+        productRepository.saveAll(listOf(product1, product2, product3))
+
+        // when
+        val latestProductNumber = productRepository.findLatestProductNumber()
+
+        // then
+        assertThat(latestProductNumber).isEqualTo(targetProductNumber)
+    }
+
+    @DisplayName("가장 마지막으로 저장한 상품의 상품번호를 읽어올 때, 상품이 하나도 없는 경우에는 null을 반환한다.")
+    @Test
+    fun findLatestProductNumberWhenProductIsEmpty() {
+        // when
+        val latestProductNumber = productRepository.findLatestProductNumber()
+
+        // then
+        assertThat(latestProductNumber).isNull()
+    }
+
+    private fun createProduct(
+        productNumber: String,
+        type: ProductType,
+        sellingStatus: ProductSellingStatus,
+        name: String,
+        price: Int
+    ): Product {
+        return Product(
+            productNumber = productNumber,
+            type = type,
+            sellingStatus = sellingStatus,
+            name = name,
+            price = price
+        )
     }
 }
