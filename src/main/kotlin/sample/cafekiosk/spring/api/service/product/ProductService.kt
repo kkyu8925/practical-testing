@@ -13,7 +13,7 @@ class ProductService(
     private val productRepository: ProductRepository
 ) {
     @Transactional
-    fun createProduct(request: ProductCreateRequest): ProductResponse? {
+    fun createProduct(request: ProductCreateRequest): ProductResponse {
         val nextProductNumber = createNextProductNumber()
 
         val product = request.toEntity(nextProductNumber)
