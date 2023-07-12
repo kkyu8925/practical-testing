@@ -2,7 +2,7 @@ package sample.cafekiosk.spring.api.service.product
 
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import sample.cafekiosk.spring.api.controller.product.dto.request.ProductCreateRequest
+import sample.cafekiosk.spring.api.service.product.request.ProductCreateServiceRequest
 import sample.cafekiosk.spring.api.service.product.response.ProductResponse
 import sample.cafekiosk.spring.domain.product.ProductRepository
 import sample.cafekiosk.spring.domain.product.ProductSellingStatus
@@ -13,7 +13,7 @@ class ProductService(
     private val productRepository: ProductRepository
 ) {
     @Transactional
-    fun createProduct(request: ProductCreateRequest): ProductResponse {
+    fun createProduct(request: ProductCreateServiceRequest): ProductResponse {
         val nextProductNumber = createNextProductNumber()
 
         val product = request.toEntity(nextProductNumber)

@@ -16,7 +16,7 @@ class ProductController(
 ) {
     @PostMapping("/api/v1/products/new")
     fun createProduct(@Valid @RequestBody request: ProductCreateRequest): ApiResponse<ProductResponse> {
-        return ApiResponse.ok(productService.createProduct(request))
+        return ApiResponse.ok(productService.createProduct(request.createProductCreateServiceRequest()))
     }
 
     @GetMapping("/api/v1/products/selling")

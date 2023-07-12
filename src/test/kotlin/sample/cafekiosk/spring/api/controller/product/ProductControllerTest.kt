@@ -41,7 +41,7 @@ internal class ProductControllerTest @Autowired constructor(
             price = 4000
         )
         every {
-            productService.createProduct(request)
+            productService.createProduct(request.createProductCreateServiceRequest())
         } returns ProductResponse(
             id = 4,
             productNumber = "004",
@@ -72,7 +72,7 @@ internal class ProductControllerTest @Autowired constructor(
             price = 0
         )
         every {
-            productService.createProduct(request)
+            productService.createProduct(request.createProductCreateServiceRequest())
         } returns mockkClass(ProductResponse::class)
 
         // when // then

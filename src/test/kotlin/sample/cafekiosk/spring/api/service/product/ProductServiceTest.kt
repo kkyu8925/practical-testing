@@ -42,7 +42,7 @@ internal class ProductServiceTest @Autowired constructor(
         )
 
         // when
-        val productResponse = productService.createProduct(request)
+        val productResponse = productService.createProduct(request.createProductCreateServiceRequest())
 
         // then
         assertThat(productResponse)
@@ -69,7 +69,7 @@ internal class ProductServiceTest @Autowired constructor(
         )
 
         // when
-        val productResponse = productService.createProduct(request)
+        val productResponse = productService.createProduct(request.createProductCreateServiceRequest())
 
         // then
         assertThat(productResponse)
