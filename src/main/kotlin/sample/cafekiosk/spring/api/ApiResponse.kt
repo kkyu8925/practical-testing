@@ -2,13 +2,12 @@ package sample.cafekiosk.spring.api
 
 import org.springframework.http.HttpStatus
 
-class ApiResponse<T>(
+data class ApiResponse<T>(
     val status: HttpStatus,
     val message: String,
-    val data: T
-) {
+    val data: T,
     val code: Int = status.value()
-
+) {
     companion object {
         fun <T> of(httpStatus: HttpStatus, message: String, data: T): ApiResponse<T> {
             return ApiResponse(httpStatus, message, data)

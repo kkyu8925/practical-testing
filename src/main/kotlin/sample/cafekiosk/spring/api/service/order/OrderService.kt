@@ -2,7 +2,7 @@ package sample.cafekiosk.spring.api.service.order
 
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import sample.cafekiosk.spring.api.controller.order.request.OrderCreateRequest
+import sample.cafekiosk.spring.api.service.order.request.OrderCreateServiceRequest
 import sample.cafekiosk.spring.api.service.order.response.OrderResponse
 import sample.cafekiosk.spring.domain.order.Order
 import sample.cafekiosk.spring.domain.order.OrderRepository
@@ -21,7 +21,7 @@ class OrderService(
     private val stockRepository: StockRepository
 ) {
 
-    fun createOrder(request: OrderCreateRequest, registeredDateTime: LocalDateTime): OrderResponse {
+    fun createOrder(request: OrderCreateServiceRequest, registeredDateTime: LocalDateTime): OrderResponse {
         val productNumbers = request.productNumbers
         val products = findProductsBy(productNumbers)
 

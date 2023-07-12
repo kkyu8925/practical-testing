@@ -17,6 +17,6 @@ class OrderController(
 
     @PostMapping("/api/v1/orders/new")
     fun createOrder(@Valid @RequestBody request: OrderCreateRequest): ApiResponse<OrderResponse> {
-        return ApiResponse.ok(orderService.createOrder(request = request, registeredDateTime = LocalDateTime.now()))
+        return ApiResponse.ok(orderService.createOrder(request = request.toServiceRequest(), registeredDateTime = LocalDateTime.now()))
     }
 }

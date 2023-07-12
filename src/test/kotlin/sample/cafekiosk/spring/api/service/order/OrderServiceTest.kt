@@ -52,7 +52,7 @@ class OrderServiceTest @Autowired constructor(
         val request = OrderCreateRequest(listOf("001", "002"))
 
         // when
-        val orderResponse = orderService.createOrder(request, registeredDateTime)
+        val orderResponse = orderService.createOrder(request.toServiceRequest(), registeredDateTime)
 
         // then
         assertThat(orderResponse.id).isNotNull()
@@ -81,7 +81,7 @@ class OrderServiceTest @Autowired constructor(
         val request = OrderCreateRequest(listOf("001", "001"))
 
         // when
-        val orderResponse = orderService.createOrder(request, registeredDateTime)
+        val orderResponse = orderService.createOrder(request.toServiceRequest(), registeredDateTime)
 
         // then
         assertThat(orderResponse.id).isNotNull()
@@ -114,7 +114,7 @@ class OrderServiceTest @Autowired constructor(
         val request = OrderCreateRequest(listOf("001", "001", "002", "003"))
 
         // when
-        val orderResponse = orderService.createOrder(request, registeredDateTime)
+        val orderResponse = orderService.createOrder(request.toServiceRequest(), registeredDateTime)
 
         // then
         assertThat(orderResponse.id).isNotNull()
@@ -158,7 +158,7 @@ class OrderServiceTest @Autowired constructor(
         val request = OrderCreateRequest(listOf("001", "001", "002", "003"))
 
         // when // then
-        assertThatThrownBy { orderService.createOrder(request, registeredDateTime) }
+        assertThatThrownBy { orderService.createOrder(request.toServiceRequest(), registeredDateTime) }
             .isInstanceOf(IllegalArgumentException::class.java)
             .hasMessage("재고가 부족한 상품이 있습니다.")
     }
