@@ -13,26 +13,8 @@ class Order(
     val registeredDateTime: LocalDateTime
 ) : BaseEntity() {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long = -1
-        protected set
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as Product
-
-        return id == other.id
-    }
-
-    override fun hashCode(): Int {
-        return id.hashCode()
-    }
-
     @Enumerated(EnumType.STRING)
-    val orderStatus: OrderStatus = OrderStatus.INIT
+    var orderStatus: OrderStatus = OrderStatus.INIT
 
     val totalPrice: Int = products.sumOf { it.price }
 
@@ -40,4 +22,8 @@ class Order(
     val orderProducts: MutableList<OrderProduct> = products.map {
         OrderProduct(order = this, product = it)
     }.toMutableList()
+
+    fun updateOrderStatus(orderStatus: OrderStatus) {
+        this.orderStatus = orderStatus
+    }
 }
