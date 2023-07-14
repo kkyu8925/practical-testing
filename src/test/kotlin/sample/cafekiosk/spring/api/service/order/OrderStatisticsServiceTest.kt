@@ -30,7 +30,7 @@ class OrderStatisticsServiceTest @Autowired constructor(
     private val productRepository: ProductRepository,
     private val mailSendHistoryRepository: MailSendHistoryRepository,
 ) {
-    @MockkBean
+    @MockkBean(relaxed = true)
     private lateinit var mailSendClient: MailSendClient
 
     @AfterEach

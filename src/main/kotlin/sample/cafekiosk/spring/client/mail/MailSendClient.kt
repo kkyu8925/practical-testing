@@ -10,4 +10,16 @@ class MailSendClient {
         log.info("메일 전송")
         throw IllegalArgumentException("메일 전송")
     }
+
+    fun a() {
+        log.info("a")
+    }
+
+    fun b() {
+        log.info("b")
+    }
+
+    fun c() {
+        log.info("c")
+    }
 }
