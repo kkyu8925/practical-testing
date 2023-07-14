@@ -3,7 +3,6 @@ package sample.cafekiosk.spring.api.service.mail
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
-import io.mockk.impl.annotations.SpyK
 import io.mockk.junit5.MockKExtension
 import io.mockk.mockkClass
 import io.mockk.verify
@@ -19,8 +18,8 @@ import sample.cafekiosk.spring.domain.history.mail.MailSendHistoryRepository
 @ExtendWith(MockKExtension::class)
 internal class MailServiceTest {
 
-    @SpyK
-    private var mailSendClient: MailSendClient = MailSendClient()
+    @MockK(relaxed = true)
+    private lateinit var mailSendClient: MailSendClient
 
     @MockK
     private lateinit var mailSendHistoryRepository: MailSendHistoryRepository
