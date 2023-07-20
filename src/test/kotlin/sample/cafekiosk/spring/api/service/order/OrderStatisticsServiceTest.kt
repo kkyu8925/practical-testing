@@ -1,14 +1,12 @@
 package sample.cafekiosk.spring.api.service.order
 
-import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
-import sample.cafekiosk.spring.client.mail.MailSendClient
+import sample.cafekiosk.spring.IntegrationTestSupport
 import sample.cafekiosk.spring.domain.history.mail.MailSendHistoryRepository
 import sample.cafekiosk.spring.domain.order.Order
 import sample.cafekiosk.spring.domain.order.OrderRepository
@@ -22,16 +20,13 @@ import sample.cafekiosk.spring.domain.product.ProductType.*
 import java.time.LocalDate
 import java.time.LocalDateTime
 
-@SpringBootTest
 class OrderStatisticsServiceTest @Autowired constructor(
     private val orderStatisticsService: OrderStatisticsService,
     private val orderProductRepository: OrderProductRepository,
     private val orderRepository: OrderRepository,
     private val productRepository: ProductRepository,
     private val mailSendHistoryRepository: MailSendHistoryRepository,
-) {
-    @MockkBean(relaxed = true)
-    private lateinit var mailSendClient: MailSendClient
+) : IntegrationTestSupport() {
 
     @AfterEach
     fun tearDown() {

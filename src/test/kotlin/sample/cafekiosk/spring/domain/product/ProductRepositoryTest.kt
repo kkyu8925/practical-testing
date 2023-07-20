@@ -5,17 +5,15 @@ import org.assertj.core.api.Assertions.tuple
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
-import org.springframework.test.context.ActiveProfiles
+import org.springframework.transaction.annotation.Transactional
+import sample.cafekiosk.spring.IntegrationTestSupport
 import sample.cafekiosk.spring.domain.product.ProductSellingStatus.*
 import sample.cafekiosk.spring.domain.product.ProductType.*
 
-@ActiveProfiles("test")
-//@SpringBootTest
-@DataJpaTest
+@Transactional
 internal class ProductRepositoryTest @Autowired constructor(
     private val productRepository: ProductRepository
-) {
+) : IntegrationTestSupport() {
 
     @DisplayName("원하는 판매상태를 가진 상품들을 조회한다.")
     @Test
