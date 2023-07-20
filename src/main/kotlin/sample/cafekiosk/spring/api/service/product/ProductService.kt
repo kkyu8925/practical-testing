@@ -10,11 +10,12 @@ import sample.cafekiosk.spring.domain.product.ProductSellingStatus
 @Transactional(readOnly = true)
 @Service
 class ProductService(
-    private val productRepository: ProductRepository
+    private val productRepository: ProductRepository,
+    private val productNumberFactory: ProductNumberFactory,
 ) {
     @Transactional
     fun createProduct(request: ProductCreateServiceRequest): ProductResponse {
-        val nextProductNumber = createNextProductNumber()
+        val nextProductNumber = productNumberFactory.createNextProductNumber()
 
         val product = request.toEntity(nextProductNumber)
         val savedProduct = productRepository.save(product)
@@ -26,14 +27,5 @@ class ProductService(
         return productRepository.findAllBySellingStatusIn(ProductSellingStatus.forDisplay()).map {
             ProductResponse.of(it)
         }
-    }
-
-    private fun createNextProductNumber(): String {
-        val latestProductNumber = productRepository.findLatestProductNumber() ?: return "001"
-
-        val latestProductNumberInt = latestProductNumber.toInt()
-        val nextProductNumberInt = latestProductNumberInt + 1
-
-        return String.format("%03d", nextProductNumberInt)
     }
 }
