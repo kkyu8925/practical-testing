@@ -35,6 +35,9 @@ dependencies {
     // test
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("com.ninja-squad:springmockk:4.0.2")
+
+    // Guava
+    implementation("com.google.guava:guava:32.1.1-jre")
 }
 
 tasks.withType<KotlinCompile> {
